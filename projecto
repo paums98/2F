@@ -1,0 +1,105 @@
+import java.io.*;
+import java.sql.Array;
+import java.util.ArrayList;
+
+public class Problema {
+
+    public static void main(String[] args) {
+
+        BufferedReader br = null;
+        BufferedWriter bw = null;
+
+        try {
+            br = new BufferedReader(new FileReader("/home/usuario/Escritorio/programacion/mensaje.txt"));
+            bw = new BufferedWriter(new FileWriter("HOla"));
+            String alternativa = "IMOUTECHOY";
+
+            String linea = null;
+
+            /* Lectura y validación  de clave */
+
+            while ((linea = br.readLine()) != null) {
+                StringBuilder sb = new StringBuilder(linea.length());
+                String letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                String codificado = null;
+                int pos = 0;
+                int i = 0;
+                int posalt=0;
+                int num1 = 0;
+                int num2 = 0;
+                int suma;
+                /* Aquí vendría la lógica del programa */
+                if (br.toString().length()>bw.toString().length()){
+                    for (; i < br.toString().length(); i++){
+                        for (;pos > letras.length();pos++){
+                            if (br.toString().charAt(i)==letras.charAt(pos)){
+                                num1=pos;
+                            }
+                            if (bw.toString().charAt(i)==letras.charAt(pos)){
+                                if (pos>bw.toString().length()){
+                                    posalt=pos-bw.toString().length();
+                                }else{
+                                    posalt=pos;
+                                }
+                                num2=posalt;
+                            }
+                            suma=num1+num2;
+                            if (suma > 25){
+                                suma=suma-26;
+                            }
+                            codificado=""+letras.charAt(suma);
+                        }
+                    }
+                } else {
+                    for (; i < bw.toString().length(); i++){
+                        for (;pos > letras.length();pos++){
+                            if (bw.toString().charAt(i)==letras.charAt(pos)){
+                                num1=pos;
+                            }
+                            if (br.toString().charAt(i)==letras.charAt(pos)){
+                                if (pos>br.toString().length()){
+                                    posalt=pos-br.toString().length();
+                                }else{
+                                    posalt=pos;
+                                }
+                                num2=posalt;
+                            }
+                            suma=num1+num2;
+                            if (suma > 25){
+                                suma=suma-26;
+                            }
+                            codificado=""+letras.charAt(suma);
+                        }
+                    }
+                }
+                System.out.println(codificado);
+
+                bw.write(sb.toString()); /* Escribe la cadena de caracteres en el fichero*/
+                bw.newLine(); /* escribe nueva línea en el fichero */
+            }
+            System.out.println("El mensaje ha sido cifrado correctamente");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null)
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            if (bw != null)
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
+
+    }
+
+}
+
+
